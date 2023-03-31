@@ -1,6 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:payment_card_ui/bloc/home/home_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitialState());
+class HomeCubit extends Cubit<int> {
+  HomeCubit() : super(0);
+  int activePageIndex = 0;
+
+  void changePageIndex(int newIndex) {
+    emit(activePageIndex = newIndex);
+  }
 }
