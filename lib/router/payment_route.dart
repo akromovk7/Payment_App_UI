@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payment_card_ui/assets/constants/route_const.dart';
+import 'package:payment_card_ui/view/home/add_cards/add_cards.dart';
 import 'package:payment_card_ui/view/home/home_page.dart';
 
 class AppRoute {
@@ -12,6 +13,8 @@ class AppRoute {
     switch (settings.name) {
       case homePage:
         return easynavigate(HomePage());
+      case addCards:
+        return easynavigate(AddCards());
     }
   }
 
