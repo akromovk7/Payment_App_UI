@@ -14,7 +14,7 @@ class AppRoute {
       case homePage:
         return easynavigate(HomePage());
       case addCards:
-        return easynavigate(AddCards());
+        return easynavigate(AddCardsPage());
     }
   }
 

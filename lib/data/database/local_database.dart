@@ -76,18 +76,60 @@ class LocalDatabase {
     return list;
   }
 
-  static Future<List<CardModel>> getCardByCategoryId(int cardType) async {
+  // static Future<List<CardModel>> getCardByCategoryId(int cardType) async {
+  //   var database = await getInstance.getDb();
+  //   List<Map> result = await database.rawQuery(
+  //     'SELECT * FROM $cardName WHERE  ${CardFields.cardType}=?',
+  //     [cardType],
+  //   );
+
+  //   var list = result
+  //       .map((e) => CardModel.fromJson(e as Map<String, dynamic>))
+  //       .toList();
+  //   return list;
+  // }
+
+  // static Future<List<CardModel>> getCardByCardOwner(
+  //     {String cardOwner = ''}) async {
+  //   var database = await getInstance.getDb();
+
+  //   if (cardOwner.isNotEmpty) {
+  //     var listOfCards = await database.query(
+  //       cardName,
+  //       where: "cardOwner LIKE ?",
+  //       whereArgs: ['%$cardOwner'],
+  //     );
+  //     var list = listOfCards.map((e) => CardModel.fromJson(e)).toList();
+  //     return list;
+  //   } else {
+  //     var listOfCards = await database.query(
+  //       cardName,
+  //       columns: [
+  //         // CardFields.cardId,
+  //         CardFields.cardNumber,
+  //         CardFields.validityPeriod,
+  //         CardFields.cardOwner,
+  //         CardFields.moneyAmount,
+  //         CardFields.iconImage,
+  //         CardFields.gradientColorSecond,
+  //         CardFields.gradinetColorFirst,
+  //         CardFields.bankName,
+  //         CardFields.cardType,
+  //       ],
+  //     );
+
+  //     var list = listOfCards.map((e) => CardModel.fromJson(e)).toList();
+  //     return list;
+  //   }
+  // }
+
+  static Future<int> deleteCardById(int cardId) async {
     var database = await getInstance.getDb();
-    List<Map> result = await database.rawQuery(
-      'SELECT * FROM $cardName WHERE  ${CardFields.cardType}=?',
-      [cardType],
+    debugPrint("CARD DELETED");
+    return await database.delete(
+      cardName,
+      where: 'cardId = ?',
+      whereArgs: [cardId],
     );
-
-    var list = result
-        .map((e) => CardModel.fromJson(e as Map<String, dynamic>))
-        .toList();
-    return list;
   }
-
-  
 }

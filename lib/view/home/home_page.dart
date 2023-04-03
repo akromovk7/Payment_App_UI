@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_card_ui/assets/colors/colors.dart';
 import 'package:payment_card_ui/assets/constants/route_const.dart';
-import 'package:payment_card_ui/bloc/home/home_cubit.dart';
+import 'package:payment_card_ui/cubit/home/home_cubit.dart';
 import 'package:payment_card_ui/service/navigation_service.dart';
 import 'package:payment_card_ui/view/home/cards/cards_page.dart';
 import 'package:payment_card_ui/view/home/payment/payment_page.dart';
