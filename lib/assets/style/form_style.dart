@@ -4,8 +4,10 @@ import 'package:payment_card_ui/assets/colors/colors.dart';
 import 'package:payment_card_ui/assets/constants/fontsize_const.dart';
 
 InputDecoration getInputDecoration(
-    {required BuildContext context, required String label, required Widget prefixIcon}) {
+    {required BuildContext context, required String label, required Widget prefixIcon, Widget? suffixIcon}) {
   return InputDecoration(
+    prefixIcon: prefixIcon,
+    suffixIcon: suffixIcon,
     label: Text(
       label,
       style: Theme.of(context)

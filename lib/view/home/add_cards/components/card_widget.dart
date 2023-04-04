@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:payment_card_ui/assets/colors/colors.dart';
+import 'package:payment_card_ui/assets/images/app_images.dart';
 import 'package:payment_card_ui/assets/style/text_style.dart';
 
 class CardWidget extends StatefulWidget {
-  String? cardNumber;
+  String image;
+  String cardNumber;
   String validityPeriod;
   String cardOwner;
   String moneyAmount;
@@ -14,7 +17,7 @@ class CardWidget extends StatefulWidget {
   String? cardType;
   CardWidget({
     super.key,
-    this.cardNumber,
+    required this.cardNumber,
     required this.validityPeriod,
     required this.cardOwner,
     required this.moneyAmount,
@@ -22,6 +25,7 @@ class CardWidget extends StatefulWidget {
     required this.gradinetColorFirst,
     required this.gradientColorSecond,
     required this.bankName,
+    this.image ='',
     this.cardType,
   });
 
@@ -44,9 +48,52 @@ class _CardWidgetState extends State<CardWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 12.h).r,
+        padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 18.h).r,
         child: Column(
-          children: [Text(widget.bankName,style: FontStyles.bankNameStyle,)],
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.bankName,
+                  style: FontStyles.bankNameStyle,
+                ),
+                Icon(Icons.contactless_outlined,color: ConsColors.kWhite,)
+              ],
+            ),
+            SizedBox(
+              width: 50.w,
+              height: 50.h,
+              child: Image.asset(AppImages.chipset),
+            ),
+            Text(
+              widget.cardNumber,
+              style: FontStyles.cardStyle,
+            ),
+            Text(
+              widget.validityPeriod,
+              style: FontStyles.cardStyle,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.cardOwner,
+                  style: FontStyles.cardStyle,
+                ),
+                SizedBox(
+                  width: 70.w,
+                  height: 50.h,
+                  child: widget.image.isEmpty ? null : Image.asset(
+                    widget.image,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

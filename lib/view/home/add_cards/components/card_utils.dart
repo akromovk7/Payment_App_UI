@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_card_ui/assets/images/app_images.dart';
 import 'package:payment_card_ui/view/home/add_cards/components/card_type.dart';
 
 class CardUtils {
@@ -9,6 +10,10 @@ class CardUtils {
       cardType = CardType.Master;
     } else if (input.startsWith(RegExp(r'[4]'))) {
       cardType = CardType.Visa;
+    } else if (input.startsWith(RegExp(r'[8600]'))) {
+      cardType = CardType.UzCard;
+    } else if (input.startsWith(RegExp(r'[9860]'))) {
+      cardType = CardType.Humo;
     } else if (input.startsWith(RegExp(r'((506(0|1))|(507(8|9))|(6500))'))) {
       cardType = CardType.Verve;
     } else if (input.startsWith(RegExp(r'((34)|(37))'))) {
@@ -32,10 +37,16 @@ class CardUtils {
     Icon? icon;
     switch (cardType) {
       case CardType.Master:
-        img = 'mastercard.png';
+        img = AppImages.mastercard;
         break;
       case CardType.Visa:
-        img = 'visa.png';
+        img = AppImages.visa;
+        break;
+      case CardType.UzCard:
+        img = AppImages.uzcard;
+        break;
+      case CardType.Humo:
+        img = AppImages.humo;
         break;
       case CardType.Verve:
         img = 'verve.png';
@@ -60,11 +71,12 @@ class CardUtils {
         );
         break;
       default:
-        icon = const Icon(
-          Icons.warning,
-          size: 24.0,
-          color: Color(0xFFB8B5C3),
-        );
+      SizedBox();
+        // icon = const Icon(
+        //   Icons.warning,
+        //   size: 24.0,
+        //   color: Color(0xFFB8B5C3),
+        // );
         break;
     }
     Widget? widget;
@@ -156,39 +168,44 @@ class CardUtils {
   }
 
   static int convertYearTofourDigits(int year) {
-  if (year < 100 && year >= 0) {
-    var now = DateTime.now();
-    String currentYear = now.year.toString();
-    String prefix = currentYear.substring(0, currentYear.length - 2);
-    year = int.parse('$prefix${year.toString().padLeft(2, '0')}');
+    if (year < 100 && year >= 0) {
+      var now = DateTime.now();
+      String currentYear = now.year.toString();
+      String prefix = currentYear.substring(0, currentYear.length - 2);
+      year = int.parse('$prefix${year.toString().padLeft(2, '0')}');
+    }
+    return year;
   }
-  return year;
-}
-static bool hasDateExpired(int month, int year) {
-  return isNotExpired(year, month);
-}
-static bool isNotExpired(int year, int month) {
-  // It has not expired if both the year and date has not passed
-  return !hasYearPassed(year) && !hasMonthPassed(year, month);
-}
-static List<int> getExpiryDate(String value) {
-  var split = value.split(RegExp(r'(/)'));
-  return [int.parse(split[0]), int.parse(split[1])];
-}
-static bool hasMonthPassed(int year, int month) {
-  var now = DateTime.now();
-  // The month has passed if:
-  // 1. The year is in the past. In that case, we just assume that the month
-  // has passed
-  // 2. Card's month (plus another month) is more than current month.
-  return hasYearPassed(year) ||
-      convertYearTofourDigits(year) == now.year && (month < now.month + 1);
-}
-static bool hasYearPassed(int year) {
-  int fourDigitsYear = convertYearTofourDigits(year);
-  var now = DateTime.now();
-  // The year has passed if the year we are currently is more than card's
-  // year
-  return fourDigitsYear < now.year;
-}
+
+  static bool hasDateExpired(int month, int year) {
+    return isNotExpired(year, month);
+  }
+
+  static bool isNotExpired(int year, int month) {
+    // It has not expired if both the year and date has not passed
+    return !hasYearPassed(year) && !hasMonthPassed(year, month);
+  }
+
+  static List<int> getExpiryDate(String value) {
+    var split = value.split(RegExp(r'(/)'));
+    return [int.parse(split[0]), int.parse(split[1])];
+  }
+
+  static bool hasMonthPassed(int year, int month) {
+    var now = DateTime.now();
+    // The month has passed if:
+    // 1. The year is in the past. In that case, we just assume that the month
+    // has passed
+    // 2. Card's month (plus another month) is more than current month.
+    return hasYearPassed(year) ||
+        convertYearTofourDigits(year) == now.year && (month < now.month + 1);
+  }
+
+  static bool hasYearPassed(int year) {
+    int fourDigitsYear = convertYearTofourDigits(year);
+    var now = DateTime.now();
+    // The year has passed if the year we are currently is more than card's
+    // year
+    return fourDigitsYear < now.year;
+  }
 }

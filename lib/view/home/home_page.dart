@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           ),
           body: screens[index],
           floatingActionButton: FloatingActionButton(
+            backgroundColor: ConsColors.kPrimaryColor,
             onPressed: () {
               NavigationService.instance.pushNamed(routeName: addCards);
             },
