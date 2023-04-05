@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:payment_card_ui/assets/constants/route_const.dart';
 import 'package:payment_card_ui/assets/themes/theme.dart';
-import 'package:payment_card_ui/bloc/home/home_bloc_bloc.dart';
-import 'package:payment_card_ui/bloc/home/home_bloc_event.dart';
+import 'package:payment_card_ui/bloc/card/card_bloc.dart';
 import 'package:payment_card_ui/cubit/home/home_cubit.dart';
 import 'package:payment_card_ui/router/payment_route.dart';
 import 'package:payment_card_ui/service/navigation_service.dart';
+import 'package:payment_card_ui/view/home/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -19,7 +19,7 @@ class App extends StatelessWidget {
         BlocProvider(
           create: ((context) => HomeCubit()),
         ),
-        BlocProvider(create: (context) => HomeBloc()..add(FetchAllCards()))
+        // BlocProvider(create: (context) => HomeBloc()..add(FetchAllCards()))
       ],
       child: MyApp(),
     );
@@ -37,12 +37,15 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-          navigatorKey: NavigationService.instance.navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Payment Card UI',
           theme: AppTheme.apptheme,
-          onGenerateRoute: AppRoute.instance.appRoutes,
-          initialRoute: homePage,
+          onGenerateRoute: (settings) => MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => CardBloc()..add(CardEvent.getCard()),
+              child: const HomePage(),
+            ),
+          ),
         );
       },
     );

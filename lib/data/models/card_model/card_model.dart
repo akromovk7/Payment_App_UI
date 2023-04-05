@@ -1,109 +1,61 @@
-class CardFields {
-  static int cardId = cardId;
-  static String cardNumber = cardNumber;
-  static String validityPeriod = validityPeriod;
-  static String cardOwner = cardOwner;
-  static String moneyAmount = moneyAmount;
-  static String iconImage = iconImage;
-  static String gradinetColorFirst = gradinetColorFirst;
-  static String gradientColorSecond = gradientColorSecond;
-  static String bankName = bankName;
-  static String cardType = cardType;
-}
+import 'dart:convert';
 
+import 'package:hive/hive.dart';
+
+part 'card_model.g.dart';
+CardModel cardModelFromJson(String str) => CardModel.fromJson(json.decode(str));
+
+String cardModelToJson(CardModel data) => json.encode(data.toJson());
+
+@HiveType(typeId: 1)
 class CardModel {
-  final int cardId;
-  final String cardNumber;
-  final String validityPeriod;
-  final String cardOwner;
-  final String moneyAmount;
-  final String iconImage;
-  final String gradinetColorFirst;
-  final String gradientColorSecond;
-  final String bankName;
-  final String cardType;
+    CardModel({
+        required this.cardId,
+        required this.cardNumber,
+        required this.carvalidityPerioddId,
+        required this.cardOwner,
+        required this.moneyAmount,
+        required this.iconImage,
+        required this.gradinetColorFirst,
+        required this.gradientColorSecond,
+        required this.bankName,
+        required this.cardType,
+    });
 
-  CardModel({
-    required this.moneyAmount,
-    required this.cardId,
-    required this.cardNumber,
-    required this.validityPeriod,
-    required this.cardOwner,
-    required this.iconImage,
-    required this.gradinetColorFirst,
-    required this.gradientColorSecond,
-    required this.cardType,
-    required this.bankName,
-  });
+    @HiveField(1) String cardId;
+    @HiveField(2) String cardNumber;
+    @HiveField(3) String carvalidityPerioddId;
+    @HiveField(4) String cardOwner;
+    @HiveField(5) String moneyAmount;
+    @HiveField(6) String iconImage;
+    @HiveField(7) String gradinetColorFirst;
+    @HiveField(8) String gradientColorSecond;
+    @HiveField(9) String bankName;
+    @HiveField(10) String cardType;
 
-  factory CardModel.fromJson(Map<String, dynamic> jsonData) {
-    return CardModel(
-      moneyAmount: jsonData['moneyAmount'] as String? ?? '',
-      cardId: jsonData['cardId'] as int? ?? -1,
-      cardNumber: jsonData['cardNumber'] as String? ?? '',
-      validityPeriod: jsonData['validityPeriod'] as String? ?? '',
-      cardOwner: jsonData['cardOwner'] as String? ?? '',
-      iconImage: jsonData['iconImage'] as String? ?? '',
-      gradinetColorFirst: jsonData['gradinetColorFirst'] as String? ?? '',
-      gradientColorSecond: jsonData['gradientColorSecond'] as String? ?? '',
-      cardType: jsonData['cardType'] as String? ?? '',
-      bankName: jsonData['bankName'] as String? ?? '',
+    factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
+        cardId: json["cardId"],
+        cardNumber: json["cardNumber"],
+        carvalidityPerioddId: json["carvalidityPerioddId"],
+        cardOwner: json["cardOwner"],
+        moneyAmount: json["moneyAmount"],
+        iconImage: json["iconImage"],
+        gradinetColorFirst: json["gradinetColorFirst"],
+        gradientColorSecond: json["gradientColorSecond"],
+        bankName: json["bankName"],
+        cardType: json["cardType"],
     );
-  }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'moneyAmount': moneyAmount,
-      'cardId': cardId,
-      'cardNumber': cardNumber,
-      'validityPeriod': validityPeriod,
-      'cardOwner': cardOwner,
-      'iconImage': iconImage,
-      'gradinetColorFirst': gradinetColorFirst,
-      'gradientColorSecond': gradientColorSecond,
-      'bankName': bankName,
-      'cardType': cardType,
+    Map<String, dynamic> toJson() => {
+        "cardId": cardId,
+        "cardNumber": cardNumber,
+        "carvalidityPerioddId": carvalidityPerioddId,
+        "cardOwner": cardOwner,
+        "moneyAmount": moneyAmount,
+        "iconImage": iconImage,
+        "gradinetColorFirst": gradinetColorFirst,
+        "gradientColorSecond": gradientColorSecond,
+        "bankName": bankName,
+        "cardType": cardType,
     };
-  }
-
-  @override
-  String toString() {
-    return '''
-      moneyAmount: $moneyAmount
-      cardId : $cardId,
-      cardNumber: $cardNumber,
-      validityPeriod: $validityPeriod,
-      cardOwner: $cardOwner,
-      iconImage: $iconImage,
-      gradinetColorFirst: $gradinetColorFirst,
-      gradientColorSecond: $gradientColorSecond,
-      bankName: $bankName,
-      cardType: $cardType,
-      ''';
-  }
-
-  CardModel copyWith({
-    String? moneyAmount,
-    int? cardId,
-    String? cardNumber,
-    String? validityPeriod,
-    String? cardOwner,
-    String? iconImage,
-    String? gradinetColorFirst,
-    String? gradientColorSecond,
-    String? bankName,
-    String? cardType,
-  }) =>
-      CardModel(
-        moneyAmount: moneyAmount ?? this.moneyAmount,
-        cardId: cardId ?? this.cardId,
-        cardNumber: cardNumber ?? this.cardNumber,
-        validityPeriod: validityPeriod ?? this.validityPeriod,
-        cardOwner: cardOwner ?? this.cardOwner,
-        iconImage: iconImage ?? this.iconImage,
-        gradinetColorFirst: gradinetColorFirst ?? this.gradinetColorFirst,
-        gradientColorSecond: gradientColorSecond ?? this.gradientColorSecond,
-        bankName: bankName ?? this.bankName,
-        cardType: cardType ?? this.cardType,
-      );
 }

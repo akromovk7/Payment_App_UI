@@ -7,9 +7,7 @@ import 'package:payment_card_ui/assets/colors/colors.dart';
 import 'package:payment_card_ui/assets/images/app_images.dart';
 import 'package:payment_card_ui/assets/style/form_style.dart';
 import 'package:payment_card_ui/assets/style/text_style.dart';
-import 'package:payment_card_ui/bloc/home/home_bloc_bloc.dart';
-import 'package:payment_card_ui/bloc/home/home_bloc_event.dart';
-import 'package:payment_card_ui/bloc/home/home_bloc_state.dart';
+import 'package:payment_card_ui/bloc/card/card_bloc.dart';
 import 'package:payment_card_ui/core/extensions/size_extensions.dart';
 import 'package:payment_card_ui/data/models/card_model/card_model.dart';
 import 'package:payment_card_ui/service/navigation_service.dart';
@@ -85,8 +83,8 @@ class _AddCardsPageState extends State<AddCardsPage> {
   // String cardType = '';
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
+    return BlocBuilder<CardBloc, CardState>(
+      builder: (ctx, state) {
         return Scaffold(
           resizeToAvoidBottomInset: true,
           backgroundColor: ConsColors.kBackgroundColor,
@@ -153,8 +151,6 @@ class _AddCardsPageState extends State<AddCardsPage> {
                             controller: cardNumberController,
                             keyboardType: TextInputType.number,
                             style: FontStyles.inputNumber,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
                             validator: validateCardNum,
                             onChanged: (number) {
                               cardNumber = number;
@@ -332,41 +328,35 @@ class _AddCardsPageState extends State<AddCardsPage> {
                           padding: EdgeInsets.symmetric(vertical: 10.h),
                           child: ButtonWidget(
                             buttonName: "Save Card",
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                formKey.currentState?.save();
-                                if (bankNameController.text.isNotEmpty &&
-                                    cardNumberController.text.isNotEmpty &&
-                                    fullNameController.text.isNotEmpty &&
-                                    cvvController.text.isNotEmpty &&
-                                    cardValidityPeriodController
-                                        .text.isNotEmpty) {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  BlocProvider.of<HomeBloc>(context).add(
-                                    AddCard(
-                                      card: CardModel(
-                                          moneyAmount: moneyAmount,
-                                          cardId: -1,
-                                          cardNumber: cardNumberController.text,
-                                          validityPeriod:
-                                              cardValidityPeriodController.text,
-                                          cardOwner: fullNameController.text,
-                                          iconImage: cardImage,
-                                          gradinetColorFirst: gradinetColorFirst
-                                              .toString()
-                                              .substring(10, 16),
-                                          gradientColorSecond:
-                                              gradientColorSecond
-                                                  .toString()
-                                                  .substring(10, 16),
-                                          cardType: cardType.name,
-                                          bankName: bankNameController.text),
-                                    ),
-                                  );
-                                  NavigationService.instance.pop();
+                            onTap: () async {
+                              // if (formKey.currentState!.validate()) {
+                              //   formKey.currentState?.save();
+                              //   if (bankNameController.text.isNotEmpty &&
+                              //       cardNumberController.text.isNotEmpty &&
+                              //       fullNameController.text.isNotEmpty &&
+                              //       cvvController.text.isNotEmpty &&
+                              //       cardValidityPeriodController
+                              //           .text.isNotEmpty) {
+                                  // FocusManager.instance.primaryFocus?.unfocus();
+                                  final CardModel cardModel = CardModel(
+                                      moneyAmount: moneyAmount,
+                                      cardId: "1",
+                                      cardNumber: cardNumberController.text,
+                                      carvalidityPerioddId:
+                                          cardValidityPeriodController.text,
+                                      cardOwner: fullNameController.text,
+                                      iconImage: cardImage,
+                                      gradinetColorFirst: "",
+                                      gradientColorSecond: "",
+                                      cardType: cardType.name,
+                                      bankName: bankNameController.text);
+                                  ctx.read<CardBloc>().add(
+                                        CardEvent.addCard(cardModel: cardModel),
+                                      );
+                                  // NavigationService.instance.pop();
                                 }
-                              }
-                            },
+                            //   }
+                            // },
                           ),
                         ),
                       ],

@@ -11,16 +11,18 @@ class CardRepository {
   CardRepository._();
 
   ///Add card
-  Future<CardModel> insertCard(CardModel cardModel) =>
-      LocalDatabase.insertToDatabase(cardModel);
+  Future<void> insertCard(CardModel cardModel) async {}
+      // LocalDatabase.insertToDatabase(cardModel);
 
   ///Delete card
-  Future<int> deleteCard(int cardId) => LocalDatabase.deleteCardById(cardId);
+  Future<void> deleteCard(int cardId) async {} 
+  // => LocalDatabase.deleteCardById(cardId);
 
   ///Update card
-  Future<CardModel> updateCard(CardModel cardModel) =>
-      LocalDatabase.updateTaskById(cardModel);
+  Future<void> updateCard(CardModel cardModel) async {}
+      // LocalDatabase.updateTaskById(cardModel);
 
   ///Get all card
-  Future<List<CardModel>> getAllCards() => LocalDatabase.getAllCards();
+  Future<void> getAllCards() async {}
+  // => LocalDatabase.getAllCards();
 }
